@@ -29,7 +29,8 @@ function getAccessToken() {
       SCOPES,
       null
     );
-    jwtClient.authorize(function(err, tokens) {
+    jwtClient.authorize(function (err, tokens) {
+      console.log(tokens)
       if (err) {
         reject(err);
         return;
@@ -123,7 +124,14 @@ function buildCommonMessage() {
 }
 
 const message = process.argv[2];
-if (message && message == 'common-message') {
+if (message && message == 'accessToken') {
+  
+  // const commonMessage = buildCommonMessage();
+  // console.log('FCM request body for message using common notification object:');
+  // console.log(JSON.stringify(commonMessage, null, 2));
+  // sendFcmMessage(buildCommonMessage());
+  getAccessToken()
+} else if (message && message == 'common-message') {
   const commonMessage = buildCommonMessage();
   console.log('FCM request body for message using common notification object:');
   console.log(JSON.stringify(commonMessage, null, 2));
@@ -136,5 +144,6 @@ if (message && message == 'common-message') {
 } else {
   console.log('Invalid command. Please use one of the following:\n'
       + 'node index.js common-message\n'
+      + 'node index.js accessToken\n'
       + 'node index.js override-message');
 }
